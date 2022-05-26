@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.3.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6', '>= 4.2.6'
+gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -40,11 +40,11 @@ gem 'faker'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.5'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'quiet_assets'
   gem 'dotenv-rails'
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
