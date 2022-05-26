@@ -17,22 +17,28 @@ RSpec.describe User, type: :model do
       @user = User.create(first_name: 'Alan', last_name: 'Smithee', email: nil, password: 'password', password_confirmation: 'password')
       expect(@user.errors.full_messages).to include("Email can't be blank")
     end
-  end
 
-  describe 'Password Minimum Length' do
     it 'should have a minimum length of 8 characters for the password' do
       @user = User.create(first_name: 'Alan', last_name: 'Smithee', email: 'try@example.com', password: 'pass', password_confirmation: 'pass')
       expect(@user.errors.full_messages).to include("Password is too short (minimum is 8 characters)")
     end
-
-    describe 'New Authentication Method' do
-      it 'should '    
-    end
-
-    
   end
 
+  describe '.authenticate_with_credentials' do
+    it 'should return an instance of the user when succesfully authenticating credentials' do
+      @user = User.create(first_name: 'Alan', last_name: 'Smithee', email: 'try@example.com', password: 'password', password_confirmation: 'password')
+      expect(User.authenticate_with_credentials(@user.email, @user.password)).to eq(@user)
+      end
+      
+    it 'should work, even with extra spaces in the email' do
+      @user = User.create(first_name: 'Alan', last_name: 'Smithee', email: 'try@example.com', password: 'password', password_confirmation: 'password')
+      expect(User.authenticate_with_credentials('   try@example.com   ', 'password')).to eq(@user)
+    end
 
-  
-
+    it 'should work, even with when the email is the wrong typecase' do
+      @user = User.create(first_name: 'Alan', last_name: 'Smithee', email: 'try@example.com', password: 'password', password_confirmation: 'password')
+      expect(User.authenticate_with_credentials('try@EXAMPLE.com', 'password')).to eq(@user)
+    end
+  end
 end
+
